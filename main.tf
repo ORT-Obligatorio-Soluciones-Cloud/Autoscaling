@@ -16,7 +16,7 @@ resource "aws_security_group" "asg_sg" {
         to_port = 22
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
-        description = "Acceso ssh"
+        description = "Acceso ssh para administracion"
     }
 
     egress {
