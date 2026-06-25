@@ -21,4 +21,8 @@ mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" < e-commer
 sudo docker run -d \
     --name php-ecommerce \
     -p 80:80 \
+    -e DB_HOST="$${endpoint}" \
+    -e DB_USER="$${user}" \
+    -e DB_PASS="$${password}" \
+    -e DB_NAME="$${database}" \
     seba904/php-ecommerce:latest
