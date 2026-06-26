@@ -30,7 +30,7 @@ resource "aws_security_group" "asg_sg" {
 
 resource "aws_launch_template" "lt" {
   name_prefix = "e-commerce-lt"
-  image_id = "ami-0c2b8ca1dad447f8a"
+  image_id = "ami-08f44e8eca9095668"
   instance_type = "t3.micro"
   key_name = "vockey"
   user_data = base64encode(
