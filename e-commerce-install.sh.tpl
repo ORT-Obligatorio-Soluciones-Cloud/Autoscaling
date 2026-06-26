@@ -6,21 +6,31 @@ database="${db_database}"
 token="${git_token}"
 
 sudo yum update -y
-sudo yum install -y docker git
+sudo yum install -y git docker
 sudo systemctl start docker
 sudo systemctl enable docker
+sudo docker pull seba904/php-ecommerce:latest
+
+cd /tmp 
+GIT_REPO_URL="https://$${token}@github.com/ORT-FI-7417-SolucionesCloud/e-commerce-obligatorio-2025.git"
+git clone "$${GIT_REPO_URL}" 
+
 sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
 sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023
 sudo rpm -Uvh https://repo.mysql.com/mysql57-community-release-el7.rpm
 sudo yum install mysql-community-client -y
 
-GIT_REPO_URL="https://$${token}@github.com/ORT-FI-7417-SolucionesCloud/e-commerce-obligatorio-2025.git"
-git clone "$${GIT_REPO_URL}"
-mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" < e-commerce-obligatorio-2025/db-settings.sql
+until mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" -e "SELECT 1" >/dev/null; do
+    sleep 5
+done
 
+mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" < /tmp/e-commerce-obligatorio-2025/db-settings.sql 
+
+sudo docker rm -f php-ecommerce || true
 sudo docker run -d \
     --name php-ecommerce \
     -p 80:80 \
+    --restart always \
     -e DB_HOST="$${endpoint}" \
     -e DB_USER="$${user}" \
     -e DB_PASS="$${password}" \
