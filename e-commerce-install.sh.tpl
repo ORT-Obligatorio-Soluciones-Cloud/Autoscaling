@@ -30,5 +30,4 @@ sudo docker run -d \
     -e DB_USER="$${user}" \
     -e DB_PASS="$${password}" \
     -e DB_NAME="$${database}" \
-    -v /tmp/e-commerce-obligatorio-2025:/var/www/html \
     seba904/php-ecommerce:latest
