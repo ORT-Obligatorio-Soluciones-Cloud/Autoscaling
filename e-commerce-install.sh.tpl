@@ -22,7 +22,7 @@ sudo docker run -d \
     seba904/php-ecommerce:latest
 
 cd /tmp 
-GIT_REPO_URL="https://$${token}@github.com/ORT-FI-7417-SolucionesCloud/e-commerce-obligatorio-2025.git"
+GIT_REPO_URL="https://$${token}@github.com:ORT-Obligatorio-Soluciones-Cloud/e-commerce-obligatorio.git"
 git clone "$${GIT_REPO_URL}" 
 
 until mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" -e "SELECT 1" >/dev/null; do
