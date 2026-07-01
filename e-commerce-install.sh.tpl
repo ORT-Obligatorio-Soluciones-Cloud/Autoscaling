@@ -10,17 +10,6 @@ sudo yum install -y git docker mysql
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo docker pull seba904/php-ecommerce:latest
-
-cd /tmp 
-GIT_REPO_URL="https://$${token}@github.com/ORT-FI-7417-SolucionesCloud/e-commerce-obligatorio-2025.git"
-git clone "$${GIT_REPO_URL}" 
-
-until mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" -e "SELECT 1" >/dev/null; do
-    sleep 5
-done
-
-mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" < /tmp/e-commerce-obligatorio-2025/db-settings.sql 
-
 sudo docker rm -f php-ecommerce || true
 sudo docker run -d \
     --name php-ecommerce \
@@ -31,3 +20,13 @@ sudo docker run -d \
     -e DB_PASS="$${password}" \
     -e DB_NAME="$${database}" \
     seba904/php-ecommerce:latest
+
+cd /tmp 
+GIT_REPO_URL="https://$${token}@github.com/ORT-FI-7417-SolucionesCloud/e-commerce-obligatorio-2025.git"
+git clone "$${GIT_REPO_URL}" 
+
+until mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" -e "SELECT 1" >/dev/null; do
+    sleep 5
+done
+
+mysql -h "$${endpoint}" -u "$${user}" -p"$${password}" "$${database}" < /tmp/e-commerce-obligatorio-2025/db-settings.sql 
